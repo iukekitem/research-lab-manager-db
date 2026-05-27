@@ -83,11 +83,11 @@ The app is split into three simple, menu-driven tabs that mirror real day-to-day
 *(Pro-tip for my repo visitors: check out the interface screenshots below showing the live data calculations!)*
 
 ### Projects & Members Dashboard
-![Projects and Members Screen](path/to/your/screenshot1.png)
+![Projects and Members Screen](docs/deliverable-3/Lab_Members.png)
 *This tab manages the core personnel records and aggregates active member IDs on research teams.*
 
 ### Analytical Reporting Dashboard
-![Grants and Publications Screen](path/to/your/screenshot2.png)
+![Grants and Publications Screen](docs/deliverable-3/Report.png)
 *This tab handles complex reporting math, dynamically calculating the top-funded projects and student output metrics.*
 
 ---
