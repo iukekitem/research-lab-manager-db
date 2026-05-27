@@ -16,7 +16,7 @@ The goal of this project was to take a messy "mini-world" of a university resear
 
 ---
 
-## Quick-Scan Engineering Decisions (For Recruiters) ⚡
+## Quick-Scan Engineering Decisions ⚡
 
 If you are a curious DB analyst checking out my portfolio, here is a quick look at the core architectural challenges I solved and why I made these choices:
 
