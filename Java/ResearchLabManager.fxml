@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.java.LabManagerController">
+
+    <top>
+        <VBox spacing="4.0" style="-fx-background-color: #1f3a68;">
+            <padding><Insets top="12.0" right="20.0" bottom="12.0" left="20.0"/></padding>
+            <Label text="Research Lab Manager" textFill="WHITE">
+                <font><Font name="System Bold" size="20.0"/></font>
+            </Label>
+            <Label fx:id="connectionStatusLabel" text="Not connected" textFill="#cdd9ee"/>
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <!-- ============================================================
+                     TAB 1 - Project & Member Management
+                ============================================================ -->
+                <Tab text="Projects &amp; Members">
+                    <content>
+                        <VBox spacing="10.0">
+                            <padding><Insets top="12.0" right="12.0" bottom="12.0" left="12.0"/></padding>
+
+                            <!-- Members CRUD -->
+                            <TitledPane text="Lab Members" expanded="true">
+                                <content>
+                                    <VBox spacing="8.0">
+                                        <padding><Insets top="8.0" right="8.0" bottom="8.0" left="8.0"/></padding>
+                                        <TableView fx:id="memberTable" prefHeight="180.0">
+                                            <columns>
+                                                <TableColumn fx:id="memberIdCol" prefWidth="70.0" text="ID"/>
+                                                <TableColumn fx:id="memberFirstCol" prefWidth="130.0" text="First Name"/>
+                                                <TableColumn fx:id="memberLastCol" prefWidth="130.0" text="Last Name"/>
+                                                <TableColumn fx:id="memberJoinCol" prefWidth="140.0" text="Join Date"/>
+                                            </columns>
+                                        </TableView>
+                                        <HBox spacing="8.0">
+                                            <Button text="Refresh" onAction="#onRefreshMembers"/>
+                                            <Button text="Add..." onAction="#onAddMember"/>
+                                            <Button text="Update..." onAction="#onUpdateMember"/>
+                                            <Button text="Remove" onAction="#onRemoveMember"/>
+                                        </HBox>
+                                    </VBox>
+                                </content>
+                            </TitledPane>
+
+                            <!-- Projects CRUD -->
+                            <TitledPane text="Research Projects" expanded="true">
+                                <content>
+                                    <VBox spacing="8.0">
+                                        <padding><Insets top="8.0" right="8.0" bottom="8.0" left="8.0"/></padding>
+                                        <TableView fx:id="projectTable" prefHeight="180.0">
+                                            <columns>
+                                                <TableColumn fx:id="projectIdCol" prefWidth="70.0" text="ID"/>
+                                                <TableColumn fx:id="projectTitleCol" prefWidth="320.0" text="Title"/>
+                                                <TableColumn fx:id="projectStatusCol" prefWidth="140.0" text="Status"/>
+                                                <TableColumn fx:id="projectMembersCol" prefWidth="150.0" text="Member IDs"/>
+                                            </columns>
+                                        </TableView>
+                                        <HBox spacing="8.0">
+                                            <Button text="Refresh" onAction="#onRefreshProjects"/>
+                                            <Button text="Add..." onAction="#onAddProject"/>
+                                            <Button text="Update..." onAction="#onUpdateProject"/>
+                                            <Button text="Remove" onAction="#onRemoveProject"/>
+                                        </HBox>
+                                    </VBox>
+                                </content>
+                            </TitledPane>
+
+                            <Separator/>
+
+                            <!-- Project status query -->
+                            <HBox spacing="8.0" alignment="CENTER_LEFT">
+                                <Label text="Project ID:"/>
+                                <TextField fx:id="projectStatusIdField" prefWidth="80.0"/>
+                                <Button text="Show Project Status" onAction="#onShowProjectStatus"/>
+                                <Label fx:id="projectStatusResultLabel" text=""/>
+                            </HBox>
+
+                            <!-- Members by grant -->
+                            <HBox spacing="8.0" alignment="CENTER_LEFT">
+                                <Label text="Grant ID:"/>
+                                <TextField fx:id="grantIdField" prefWidth="80.0"/>
+                                <Button text="Members on Grant-Funded Project" onAction="#onShowMembersByGrant"/>
+                            </HBox>
+
+                            <!-- Mentorship -->
+                            <HBox spacing="8.0" alignment="CENTER_LEFT">
+                                <Button text="Show Mentorship Relations" onAction="#onShowMentorship"/>
+                            </HBox>
+
+                            <Label text="Output:"/>
+                            <TextArea fx:id="projectsOutputArea" prefHeight="180.0" editable="false"/>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <!-- ============================================================
+                     TAB 2 - Equipment Usage Tracking
+                ============================================================ -->
+                <Tab text="Equipment">
+                    <content>
+                        <VBox spacing="10.0">
+                            <padding><Insets top="12.0" right="12.0" bottom="12.0" left="12.0"/></padding>
+
+                            <!-- Equipment CRUD -->
+                            <TitledPane text="Equipment" expanded="true">
+                                <content>
+                                    <VBox spacing="8.0">
+                                        <padding><Insets top="8.0" right="8.0" bottom="8.0" left="8.0"/></padding>
+                                        <TableView fx:id="equipmentTable" prefHeight="160.0">
+                                            <columns>
+                                                <TableColumn fx:id="equipIdCol" prefWidth="100.0" text="Device #"/>
+                                                <TableColumn fx:id="equipModelCol" prefWidth="220.0" text="Model"/>
+                                                <TableColumn fx:id="equipTypeCol" prefWidth="180.0" text="Type"/>
+                                                <TableColumn fx:id="equipStatusCol" prefWidth="140.0" text="Status"/>
+                                            </columns>
+                                        </TableView>
+                                        <HBox spacing="8.0">
+                                            <Button text="Refresh" onAction="#onRefreshEquipment"/>
+                                            <Button text="Add..." onAction="#onAddEquipment"/>
+                                            <Button text="Update..." onAction="#onUpdateEquipment"/>
+                                            <Button text="Remove" onAction="#onRemoveEquipment"/>
+                                        </HBox>
+                                    </VBox>
+                                </content>
+                            </TitledPane>
+
+                            <!-- Usage CRUD -->
+                            <TitledPane text="Equipment Usage" expanded="true">
+                                <content>
+                                    <VBox spacing="8.0">
+                                        <padding><Insets top="8.0" right="8.0" bottom="8.0" left="8.0"/></padding>
+                                        <TableView fx:id="usageTable" prefHeight="160.0">
+                                            <columns>
+                                                <TableColumn fx:id="usageIdCol" prefWidth="80.0" text="Usage ID"/>
+                                                <TableColumn fx:id="usageMemberCol" prefWidth="100.0" text="Member ID"/>
+                                                <TableColumn fx:id="usageDeviceCol" prefWidth="100.0" text="Device #"/>
+                                                <TableColumn fx:id="usagePurposeCol" prefWidth="240.0" text="Purpose"/>
+                                            </columns>
+                                        </TableView>
+                                        <HBox spacing="8.0">
+                                            <Button text="Refresh" onAction="#onRefreshUsage"/>
+                                            <Button text="Add..." onAction="#onAddUsage"/>
+                                            <Button text="Update..." onAction="#onUpdateUsage"/>
+                                            <Button text="Remove" onAction="#onRemoveUsage"/>
+                                        </HBox>
+                                    </VBox>
+                                </content>
+                            </TitledPane>
+
+                            <Separator/>
+
+                            <!-- Status query -->
+                            <HBox spacing="8.0" alignment="CENTER_LEFT">
+                                <Label text="Device #:"/>
+                                <TextField fx:id="deviceStatusIdField" prefWidth="80.0"/>
+                                <Button text="Show Equipment Status" onAction="#onShowDeviceStatus"/>
+                                <Label fx:id="deviceStatusResultLabel" text=""/>
+                            </HBox>
+
+                            <!-- Current users -->
+                            <HBox spacing="8.0" alignment="CENTER_LEFT">
+                                <Label text="Device #:"/>
+                                <TextField fx:id="deviceUsersIdField" prefWidth="80.0"/>
+                                <Button text="Current Users &amp; Their Projects" onAction="#onShowDeviceUsers"/>
+                            </HBox>
+
+                            <Label text="Output:"/>
+                            <TextArea fx:id="equipmentOutputArea" prefHeight="160.0" editable="false"/>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <!-- ============================================================
+                     TAB 3 - Grant & Publication Reporting
+                ============================================================ -->
+                <Tab text="Grants &amp; Publications">
+                    <content>
+                        <VBox spacing="10.0">
+                            <padding><Insets top="12.0" right="12.0" bottom="12.0" left="12.0"/></padding>
+
+                            <Label text="Reports">
+                                <font><Font name="System Bold" size="14.0"/></font>
+                            </Label>
+
+                            <HBox spacing="8.0">
+                                <Button text="Top 5 Funded Projects" onAction="#onTop5Funded"/>
+                                <Button text="Top Mentor by Mentee Pubs" onAction="#onTopMentor"/>
+                                <Button text="Student Pubs by Major &amp; Year" onAction="#onPubsByMajorYear"/>
+                                <Button text="Top 3 Productive Years" onAction="#onTop3Years"/>
+                            </HBox>
+
+                            <Separator/>
+
+                            <HBox spacing="8.0" alignment="CENTER_LEFT">
+                                <Label text="Projects ended before:"/>
+                                <DatePicker fx:id="endedBeforeDatePicker"/>
+                                <Button text="Run Report" onAction="#onProjectsEndedBefore"/>
+                            </HBox>
+
+                            <Separator/>
+
+                            <Label text="Results:"/>
+                            <TextArea fx:id="reportingOutputArea" prefHeight="380.0" editable="false"/>
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #eef1f6;">
+            <padding><Insets top="6.0" right="12.0" bottom="6.0" left="12.0"/></padding>
+            <Label fx:id="footerLabel" text="CS 631 - Research Lab Manager (Deliverable 3)"/>
+        </HBox>
+    </bottom>
+</BorderPane>
